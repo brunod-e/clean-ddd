@@ -5,14 +5,22 @@ import {
 } from "@/domain/forum/enterprise/entities/question";
 import { Slug } from "@/domain/forum/enterprise/entities/value-objects/slug";
 
-export function makeQuestion(override: Partial<QuestionProps> = {}): Question {
-  const question = Question.create({
-    authorId: new UniqueEntityId(),
-    title: "This is the title",
-    content: "This is the content",
-    slug: Slug.create("this-is-the-question"),
-    ...override,
-  });
+import { faker } from "@faker-js/faker";
+
+export function makeQuestion(
+  override: Partial<QuestionProps> = {},
+  id?: UniqueEntityId
+): Question {
+  const question = Question.create(
+    {
+      authorId: new UniqueEntityId(),
+      title: faker.lorem.sentences(1),
+      content: faker.lorem.text(),
+      slug: Slug.create("this-is-the-question"),
+      ...override,
+    },
+    id
+  );
 
   return question;
 }
